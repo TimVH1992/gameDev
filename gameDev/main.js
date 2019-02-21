@@ -60,6 +60,8 @@ function drawBall() {
         } else {
         
         lives--;
+        dy  *= -1;
+
         if(!lives){
         alert("GAME OVER");
         document.location.reload();
@@ -68,7 +70,7 @@ function drawBall() {
             x = canvas.width / 2;
             y = canvas.height - 30;
             dx = 2;
-            dy = 2;
+            dy = -2;
             paddleX = (canvas.width-paddleWidth) / 2;
         }
     }
@@ -97,7 +99,7 @@ function drawBricks() {
         for (let j= 0; j < brickRowCount; j++) {
             if(bricks[i][j].status == 1) {
             let brickX = (i * (brickWidth + brickPadding)) + brickOffsetLeft;
-            let brickY = (i * (brickHeight + brickPadding)) + brickOffsetTop;
+            let brickY = (j * (brickHeight + brickPadding)) + brickOffsetTop;
 
             bricks[i][j].x = brickX;
             bricks[i][j].y = brickY;
