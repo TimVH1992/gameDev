@@ -40,13 +40,15 @@ such as setInterval() or requestAnimationFrame(). */
     let lives = 3;
     
 
-    const bricks = [];
-        for (let i = 0; i < brickColumnCount; i++) {
+    let bricks = [];
+	
+	
+        /*for (let i = 0; i < brickColumnCount; i++) {
             bricks[i] = [];
             for (let j = 0; j < brickRowCount; j++) {
                 bricks[i][j] = { x: 0, y: 0, status: 1 }; 
             }
-        }
+        }*/
         // berekening voor de x en de y waarden van de bricks
 
 
@@ -60,6 +62,7 @@ function drawBall() {
         } else {
         
         lives--;
+		//dx *= -1;
         if(!lives){
         alert("GAME OVER");
         document.location.reload();
@@ -68,7 +71,7 @@ function drawBall() {
             x = canvas.width / 2;
             y = canvas.height - 30;
             dx = 2;
-            dy = 2;
+            dy = -2;
             paddleX = (canvas.width-paddleWidth) / 2;
         }
     }
@@ -94,10 +97,10 @@ function drawPaddle() {
 }
 function drawBricks() {
     for(let i = 0; i < brickColumnCount; i++) {
-        for (let j= 0; j < brickRowCount; j++) {
+        for (let j = 0; j < brickRowCount; j++) {
             if(bricks[i][j].status == 1) {
             let brickX = (i * (brickWidth + brickPadding)) + brickOffsetLeft;
-            let brickY = (i * (brickHeight + brickPadding)) + brickOffsetTop;
+            let brickY = (j * (brickHeight + brickPadding)) + brickOffsetTop;
 
             bricks[i][j].x = brickX;
             bricks[i][j].y = brickY;
@@ -176,6 +179,19 @@ function drawLives() {
     ctx.fillText("Lives: " + lives, canvas.width -65, 20);
 }
 
+
+function start () {
+	bricks = [brickColumnCount];
+	for (let j = 0; j < brickColumnCount; j++) {
+		let row = [brickRowCount];
+		for (let i = 0; i < brickRowCount; i++) {
+			row[i] = { x: 0, y: 0, status: 1 };
+		}
+		bricks[j] = row;
+	}
+}
+
+
 function draw() {
     // drawing code
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -194,6 +210,8 @@ function draw() {
     drawLives();
     requestAnimationFrame(draw);
 }
+
+start ();
 
 // loop to keep drawing untill a stop command
 draw();
